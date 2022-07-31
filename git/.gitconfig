@@ -1,0 +1,52 @@
+[alias]
+	live = !screen ~/hypotheekbond/monorepo/bin/push-live.sh
+    dev = checkout development
+    st = status --short
+    df = diff --word-diff --color-words
+    panic = !tar cvf ../git_panic.tar *
+    lga = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --all
+    lgb = log --walk-reflogs --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --all
+
+    br = branch
+    co = commit -a
+    ch = checkout
+    cp = cherry-pick
+    ll = log --stat --abbrev-commit
+    mo = merge origin/master
+    search = log -m --decorate --stat -graph --date=relative --oneline -S
+    dc = diff --cached
+        lc = log ORIG_HEAD.. --stat --no-merges
+        gl = log --oneline --decorate --stat --graph
+    st = status -sb
+    serve = !git daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
+    prune-all = !git remote | xargs -n 1 git remote prune
+    whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+    whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+    cl = "!git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d"
+    ltag = "!LATEST=`git describe --abbrev=0 --tags`; echo Latest: ${LATEST};  git log --oneline ${LATEST}..HEAD"
+    tags = tag -l --sort version:refname
+    pt = "!git push && git push --tags"
+    rs = flow release start
+    rf = flow release finish
+    rp = "!git ch develop && git push origin develop:develop && git ch master && git pt"
+    rc = "!git ch master && git merge develop && git ch develop && git merge master && git rp"
+    pimp = "!git pull && git pull origin master && git push"
+    stashgrep = "!f() { for i in `git stash list --format=\"%gd\"` ; \
+              do git stash show -p $i | grep -H --label=\"$i\" \"$@\" ; done ; }; f"
+[core]
+editor = nvim
+excludesfile = /Users/jigalsanders/.gitignore_global
+[difftool "sourcetree"]
+cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+path =
+[mergetool "sourcetree"]
+cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+trustExitCode = true
+[user]
+	name = Jigal Sanders
+	email = jigalroecha@gmail.com
+[commit]
+template = /Users/jigalsanders/.stCommitMsg
+[init]
+	defaultBranch = master
