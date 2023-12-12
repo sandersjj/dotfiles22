@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -8,7 +15,7 @@ export ZSH=$HOME/.oh-my-zsh
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+ZSH_THEME="powerlevel10k/powerlevel10K"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -101,12 +108,28 @@ alias vim= "nvim"
 alias ll='ls -lG'
 alias vim=nvim
 alias web='cd ~/hypotheekbond/monorepo/apps/web'
+alias mono='cd ~/hypotheekbond/monorepo/'
+alias datam='cd ~/hypotheekbond/monorepo/apps/datamining'
 alias prive='cd ~/prive'
 alias devenv='cd ~/hypotheekbond/devenv-docker'
 alias sz='source ~/.bashrc && source ~/.zshrc'
 alias artisan='php artisan'
 alias art='artisan'
 alias artd='art dump-server'
+alias dartd='dre php artisan dump-server'
+alias dm='~/hypotheekbond/monorepo/apps/migrate && dre php bin/migrate.php migrate'
+alias pest='./vendor/bin/pest'
+alias start-work="~/bin/start-work"
+alias copydir='echo "$(pwd)" | pbcopy'
+
+eval $(thefuck --alias oeps)
+#
+# dre migration create
+dmc() {
+  cd ~/hypotheekbond/monorepo/apps/migrate && dre php bin/migrate.php create $1
+}
+
+
 export YVM_DIR=/usr/local/opt/yvm
 [ -r $YVM_DIR/yvm.sh ] && . $YVM_DIR/yvm.sh
 
@@ -117,5 +140,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
-export PATH=${PATH}:~/.composer/vendor/bin
+export PATH=${PATH}:~/.composer/vendor/bin:~/bin
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
